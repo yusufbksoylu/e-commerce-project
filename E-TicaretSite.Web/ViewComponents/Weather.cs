@@ -10,7 +10,7 @@ public class Weather : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync()
     {
         string api = "0928835605ea3e6b03f3a11f83b9d751";
-        string city = "Bursa";
+        string city = "İstanbul";
         string baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
         using (HttpClient client = new HttpClient())
