@@ -1,0 +1,149 @@
+﻿@using Entity.Entities
+@using X.PagedList.Mvc.Bootstrap4.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Kullanıcılar";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .table td {
+        vertical-align: middle;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+@if (!Model.Any())
+{
+    <div class="col-12 text-center mt-3 mb-3">
+        @using (Html.BeginForm())
+        {
+            <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kullanıcı adını yazınız.">
+            <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                <i class="fa fa-search"></i>
+            </button>
+        }
+    </div>
+    <center>
+        <div class="alert alert-danger text-center mt-4" style="width:50%;">
+            <div class="mt-2 mb-2">
+                <b>Kullanıcı Bulunamadı.</b>
+            </div>
+            <div class="mt-2 mb-2">
+                Lütfen geçerli bir kullanıcı adı yazınız.
+            </div>
+        </div>
+    </center>
+    <center class="mt-4">
+        <a class="btn-success" style="border-radius: 5px;padding: 4px 10px;" href="/User/UserRegister/">
+            <i class="fa fa-plus"></i>
+        </a>
+    </center>
+}
+@if (Model.Any())
+{
+    <div class="container-fluid">
+        <div class="col-12 text-center mt-3 mb-3">
+            @using (Html.BeginForm())
+            {
+                <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kullanıcı adını yazınız.">
+                <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                    <i class="fa fa-search"></i>
+                </button>
+            }
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/User/SortIdOrderBy/">Id</a>
+                    </th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/User/SortNameOrderBy/">Kullanıcı Ad</a>
+                    </th>
+                    <th>Parola</th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/User/SortStatuOrderByDescending/">Statü</a>
+                    </th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/User/SortDateOrderBy/">Eklenme Tarihi</a>
+                    </th>
+                    <th>Güncelle</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.UserName</td>
+                    <td>
+                        <div style="display:flex;justify-content:center">
+                            <button style="border:none;background-color:transparent;outline:None" onclick="togglePasswordVisibility('@item.Id');toggleEye('@item.Id');">
+                                <i class="fa fa-eye" id="eye_@item.Id"></i>
+                                <i style="display:none;" class="fa fa-eye-slash" id="eye-slash_@item.Id"></i>
+                            </button>
+                            <input disabled type="password" id="password_@item.Id" style="border:none;background-color:transparent;text-align:center" value="@item.Password">
+                        </div>
+                    </td>
+                    <td>
+
+                        @if (item.Statu == true)
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-success">
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-danger">
+                            </a>
+                        }
+                    </td>
+                    <td>@item.CreatedDate</td>
+                    <td>
+                        <a class="btn-warning text-white" style="border-radius: 5px;padding: 4px 10px;" href="/User/EditUser/@item.Id">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-primary" style="border-radius: 5px;padding: 4px 10px;" href="/User/UserDelete/@item.Id">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-12" style="display:flex;justify-content:center;">
+        @Html.PagedListPager((IPagedList)Model,page=>Url.Action("SortStatuOrderBy",new {page}),Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <center class="mt-4">
+        <a class="btn-success" style="border-radius: 5px;padding: 4px 10px;" href="/User/UserRegister/">
+            <i class="fa fa-plus"></i>
+        </a>
+    </center>
+    <script>
+        function togglePasswordVisibility(Id) {
+            var passwordField = document.getElementById("password_" + Id);
+
+            if (passwordField.getAttribute("type") === "password") {
+                passwordField.setAttribute("type", "text");
+            } else {
+                passwordField.setAttribute("type", "password");
+            }
+        }
+        function toggleEye(UserId) {
+            var x = document.getElementById("eye_" + + Id);
+            var y = document.getElementById("eye-slash_" + Id);
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                y.style.display = "none";
+            } else {
+                x.style.display = "none";
+                y.style.display = "block";
+            }
+        }
+    </script>
+}
+

@@ -1,2 +1,6 @@
-# e-commerce-project
-Yazılım kapsamında @hirayavuzyilmaz ile birlikte geliştirilen e-ticaret uygulaması.
+ASP .NET Core 6 kullanılan , Responsive ,Katmanlı mimari ve MVC mimarisini kullanan , E-Ticaret Sitesi
+
+Takım
+
+Hira YAVUZYILMAZ
+Yusuf Baki SOYLU

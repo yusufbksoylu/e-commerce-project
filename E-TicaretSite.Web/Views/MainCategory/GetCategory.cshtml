@@ -1,0 +1,85 @@
+﻿@using Entity.Entities
+@using X.PagedList.Mvc.Bootstrap4.Core;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<Category>
+@{
+    ViewData["Title"] = "Ürün Resimleri";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@if (!Model.Any())
+{
+    <div class="col-12 text-center mt-3 mb-3">
+        @using (Html.BeginForm())
+        {
+            <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kategori adını yazınız.">
+            <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                <i class="fa fa-search"></i>
+            </button>
+        }
+    </div>
+    <center>
+        <div class="alert alert-danger text-center mt-4" style="width:50%;">
+            <div class="mt-2 mb-2">
+                <b>Kategori bulunamadı.</b>
+            </div>
+            <div class="mt-2 mb-2">
+                Lütfen geçerli bir kategori adı yazınız.
+            </div>
+        </div>
+    </center>
+}
+@if (Model.Any())
+{
+    <div class="container-fluid">
+        <div class="col-12 text-center mt-3 mb-3">
+            @using (Html.BeginForm())
+            {
+                <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kategori adını yazınız.">
+                <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                    <i class="fa fa-search"></i>
+                </button>
+            }
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Ad</th>
+                    <th>Genel Kategorisi</th>
+                    <th>Statü</th>
+                    <th>Tarih</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>
+                        <a style="text-decoration:none;font-weight:bolder" href="/Product/ListCategoryProduct/@item.Id">@item.Name</a>
+                    </td>
+                    <td>
+                        <a style="text-decoration:none;font-weight:bolder" href="/Product/ListMainCategoryProduct/@item.MainCategoryId">@item.MainCategory.MainCategoryName</a>
+                    </td>
+                    <td>
+                        @if (item.Statu == true)
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-success">
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-danger">
+                            </a>
+                        }
+                    </td>
+                    <td>@item.CreatedDate</td>
+                </tr>
+            }
+        </table>
+        <div class="col-12" style="display:flex;justify-content:center;">
+            @Html.PagedListPager((IPagedList)Model,page=>Url.Action("GetCategoroy",new {page}),Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
+        </div>
+    </div>
+}
+

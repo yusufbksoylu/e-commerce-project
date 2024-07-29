@@ -1,0 +1,137 @@
+﻿@using Entity.Entities
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Bootstrap4.Core
+@model IPagedList<Category>
+
+@{
+    ViewData["Title"] = "CategoryList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .table td {
+        vertical-align: middle;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+@if (!Model.Any())
+{
+    <div class="col-12 text-center mt-3 mb-3">
+        @using (Html.BeginForm())
+        {
+            <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kategori adını yazınız.">
+            <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                <i class="fa fa-search"></i>
+            </button>
+        }
+    </div>
+    <center>
+        <div class="alert alert-danger text-center mt-4" style="width:50%;">
+            <div class="mt-2 mb-2">
+                <b>Kategori Bulunamadı.</b>
+            </div>
+            <div class="mt-2 mb-2">
+                Lütfen geçerli bir kategori adı yazınız.
+            </div>
+        </div>
+    </center>
+    <div class="text-center">
+        @await Html.PartialAsync("~/Views/Category/CategoryAdd.cshtml")
+    </div>
+}
+
+@if (Model.Any())
+{
+    <div class="container-fluid">
+        <div class="col-12 text-center mt-3 mb-3">
+            @using (Html.BeginForm())
+            {
+                <input style="width:50%;border-right:none;padding:4.5px;outline:none;" type="text" name="p" placeholder="Aramak istediğiniz kategori adını yazınız.">
+                <button style="border-left:none;background-color:transparent;outline:none;margin-left:-4px;padding:9px 9px 7.3px 1px">
+                    <i class="fa fa-search"></i>
+                </button>
+            }
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/Category/SortIdOrderBy/">Id</a>
+                    </th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/Category/SortMainCategoryNameOrderBy/">Genel Kategori Ad</a>
+                    </th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/Category/SortNameOrderBy/">Kategori Ad</a>
+                    </th>
+                    <th>
+                        <a class="text-white" style="text-decoration:none;" href="/Category/SortStatuOrderByDescending/">Statü</a>
+                    </th>
+                    <th>Güncelle</th>
+                    <th>Sil</th>
+                    <th>Ürünler</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>
+                        <a href="/Product/ListMainCategoryProduct/@item.MainCategoryId" style="text-decoration:none;font-weight:bolder;">
+                            @item.MainCategory.MainCategoryName
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Product/ListCategoryProduct/@item.Id" style="text-decoration:none;font-weight:bolder;">
+                            @item.Name
+                        </a>
+                    </td>
+                    <td>
+
+                        @if (item.Statu == true)
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-success">
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="statu" style="padding:2px 12px;border-radius:80%" class="@item.Statu btn-danger">
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn-warning text-white" style="border-radius: 5px;padding: 4px 10px;" href="/Category/EditCategory/@item.Id">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-primary" style="border-radius: 5px;padding: 4px 10px;" href="/Category/CategoryDelete/@item.Id">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn-secondary" style="border-radius: 5px;padding: 4px 10px;text-decoration:none;font-weight:500" href="@Url.Action("GetProduct", "Category", new {  id = item.Id })">
+                            Ürünler
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-12" style="display:flex;justify-content:center;">
+        @Html.PagedListPager((IPagedList)Model,page=>Url.Action("SortStatuOrderBy",new {page}),Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="text-center">
+        @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+        @await Html.PartialAsync("~/Views/Category/CategoryAdd.cshtml")
+    </div>
+}
+

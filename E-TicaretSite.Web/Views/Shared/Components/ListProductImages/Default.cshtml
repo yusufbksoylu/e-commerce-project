@@ -1,0 +1,84 @@
+﻿﻿@using Entity.Entities
+@model IEnumerable<ProductImage>
+<link href="~/css/slider.css" rel="stylesheet" />
+@if (!Model.Any())
+{
+    <div id="Error" class="text-center">
+        <b style="margin-bottom:50px">Aradığınız Ürünün Görselleri Bulunmamaktadır.</b>
+    </div>
+}
+@if (Model.Any())
+{
+        @foreach (var item in Model)
+        {
+            <div class="mySlides">
+                <img src="@item.ImageUrl" onclick="openFullScreen(this)">
+            </div>
+        }
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    <div class="row">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <div class="column">
+                <img class="demo cursor" src="@Model.ElementAt(i).ImageUrl" style="width:100%;" onclick="currentSlide(@i + 1)" alt="Resim">
+            </div>
+        }
+    </div>
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeFullScreen()">&times;</span>
+        <img class="modal-content" id="fullScreenImage">
+    </div>
+
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        var autoSlideInterval = setInterval(function () {
+            plusSlides(1);
+        }, 3500);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var prev = document.querySelector(".prev");
+            var next = document.querySelector(".next");
+
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        function openFullScreen(imageElement) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("fullScreenImage");
+            modal.style.display = "block";
+            modalImg.src = imageElement.src;
+
+            modalImg.style.maxWidth = "50%";
+            modalImg.style.maxHeight = "100%";
+        }
+
+        function closeFullScreen() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+
+}
