@@ -15,19 +15,22 @@ namespace E_TicaretSite.Web.Controllers
     public class HomeController : Controller
     {
         ProductManager pm = new ProductManager(new EfProductRepository());
+
         [AllowAnonymous]
-        public IActionResult HomePage(string p,int page = 1)
+        public IActionResult HomePage(string p, int page = 1)
         {
             if (!string.IsNullOrEmpty(p))
             {
-                return View("~/Views/Product/MostViewProduct.cshtml",pm.ListMostViewProduct().Where(x => x.Name.ToLower().Contains(p.ToLower())).ToPagedList(page,10));
+                return View("~/Views/Product/MostViewProduct.cshtml", pm.ListMostViewProduct().Where(x => x.Name.ToLower().Contains(p.ToLower())).ToPagedList(page, 10));
             }
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult Error(int code)
         {
-            return View();
+            
+            return RedirectToAction("HomePage");
         }
     }
-    }
+}
