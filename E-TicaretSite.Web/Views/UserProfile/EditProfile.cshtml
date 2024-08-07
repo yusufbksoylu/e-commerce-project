@@ -5,13 +5,18 @@
 }
 
 @using (Html.BeginForm("EditProfile", "UserProfile", FormMethod.Post))
-{
-    @Html.TextBoxFor(x=>x.Id,new {@style="display:none;"})
-    <center class="mb-2 mt-2">@Html.TextBoxFor(x => x.Name, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;" ,@placeHolder= "Ad"})</center>
-    <center class="mb-2 mt-2">@Html.TextBoxFor(x => x.Surname, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;" ,@placeHolder="Soyad"})</center>
+{    
+    @Html.HiddenFor(x => x.Id)
+    <center class="mb-2 mt-2">
+        @* @Html.TextBox("Name", Model.Name, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "Ad" }) *@
+        <input type="text" name="Name" value="@(string.IsNullOrEmpty(Model.Name = "Adınız") ? "" : Model.Name)" id="Name" style="padding: 4px 10px;margin-left:-10px;width:50%;" />
+    </center>
+    <center class="mb-2 mt-2">
+        <input type="text" name="Surname" value="@(string.IsNullOrEmpty(Model.Surname = "Soyadınız") ? "" : Model.Surname)" id="Surname" style="padding: 4px 10px;margin-left:-10px;width:50%;" />
+    </center>
     <center>
         <div class="mb-2 mt-2">
-            @Html.TextBoxFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @type = "date"})
+            @Html.TextBox("BirthDate", Model.BirthDate.ToString("yyyy-MM-dd"), new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @type = "date" })
         </div>
     </center>
     <center>
@@ -20,11 +25,18 @@
         {
         new SelectListItem { Value = "Erkek", Text = "Erkek" },
         new SelectListItem { Value = "Kadın", Text = "Kadın" }
-        }, new {style="padding: 4px 10px;margin-left:-10px;width:50%;"})
+        }, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;" })
         </div>
     </center>
-    <center class="mb-2 mt-2">@Html.TextBoxFor(x => x.Email, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;" ,@placeHolder = "E-mail" })</center>
-    <center class="mb-2 mt-2">@Html.TextBoxFor(x => x.PhoneNumber, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;" ,@placeHolder = "Telefon Numarası" })</center>
+    <center class="mb-2 mt-2">
+        @* @Html.TextBox("Email", Model.Email, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "E-mail" }) *@
+        <input type="email" name="Email" value="@(string.IsNullOrEmpty(Model.Email = "E=posta Adresiniz ") ? "" : Model.Email)" id="Email" style="padding: 4px 10px;margin-left:-10px;width:50%;" />
+
+    </center>
+    <center class="mb-2 mt-2">
+        @*@Html.TextBox("PhoneNumber", Model.PhoneNumber, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "Telefon Numarası" })*@
+        <input type="tel" name="PhoneNumber" value="@(string.IsNullOrEmpty(Model.PhoneNumber = "Telefon Numaranız") ? "" : Model.PhoneNumber)" id="PhoneNumber" style="padding: 4px 10px;margin-left:-10px;width:50%;" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" />
+    </center>
     <center class="mt-2">
         <button style="padding: 4px 10px;margin-left:-10px;" class="btn-success text-center">Güncelle</button>
     </center>
