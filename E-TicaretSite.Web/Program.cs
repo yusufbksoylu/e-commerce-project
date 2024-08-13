@@ -19,6 +19,9 @@ namespace E_TicaretSite.Web
                 });
 
             var app = builder.Build();
+            app.MapControllerRoute(
+               name: "default",
+               pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.UseStatusCodePagesWithReExecute("/Home/Error/", "?Code={0}");
 
@@ -31,9 +34,7 @@ namespace E_TicaretSite.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+           
 
             app.Run();
         }
