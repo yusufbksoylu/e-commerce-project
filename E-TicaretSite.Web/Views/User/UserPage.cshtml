@@ -3,15 +3,13 @@
     ViewData["Title"] = "Profilim";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<marquee scrollamount="5" class="bg-dark text-white" style="height:50px;padding-top:12px;">
-    Hoşgeldin @await Html.PartialAsync("~/Views/User/GetUserName.cshtml") - Umarım iyi bir gün geçiriyorsundur.
-</marquee>
+
 <div class="row">
     @await Component.InvokeAsync("UserComments")
     @await Component.InvokeAsync("Weather")
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="text-center col-sm-4 mt-2 mb-2">
-        <div class="card text-white" style="background-color:darkorange;;height:150px;">
+        <div class="card text-white" style="background-color:plum;;height:150px;">
             <div class="card-body">
                 <h5>
                     <div class="row">
@@ -19,10 +17,10 @@
                             <img src="https://cdn-icons-png.flaticon.com/128/2435/2435292.png" width="90" />
                         </div>
                         <div class="col-6 mt-1">
-                            <div class="col-12 pb-2">Siparişlerim</div>
+                            <div class="col-14 pb-2">Siparişlerim</div>
                             <div class="col-12 counter pb-2" data-val="0">0</div>
                             <div class="col-12 btn btn-info">
-                                <a style="text-decoration:none;color:White;width:100%" href="#">Siparişler</a>
+                                <a style="text-decoration:none;color:White;width:100%" href="#">Git</a>
                             </div>
                         </div>
                     </div>
@@ -43,7 +41,7 @@
 @* @await Component.InvokeAsync("SoldBy") *@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="text-center col-sm-6 col-md-4 col-lg-3 mt-2 mb-2">
-        <div class="card text-white" style="background-color:saddlebrown;height:100px">
+        <div class="card text-white" style="background-color:plum;height:100px">
             <div class="card-body">
                 <h4>
                     <span style="display:block" class="pt-2">Satıcı</span>
