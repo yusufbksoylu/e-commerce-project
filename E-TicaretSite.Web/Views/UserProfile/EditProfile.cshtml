@@ -5,10 +5,9 @@
 }
 
 @using (Html.BeginForm("EditProfile", "UserProfile", FormMethod.Post))
-{    
+{
     @Html.HiddenFor(x => x.Id)
     <center class="mb-2 mt-2">
-        @* @Html.TextBox("Name", Model.Name, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "Ad" }) *@
         <input type="text" name="Name" value="@(string.IsNullOrEmpty(Model.Name = "Adınız") ? "" : Model.Name)" id="Name" style="padding: 4px 10px;margin-left:-10px;width:50%;" />
     </center>
     <center class="mb-2 mt-2">
@@ -29,12 +28,10 @@
         </div>
     </center>
     <center class="mb-2 mt-2">
-        @* @Html.TextBox("Email", Model.Email, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "E-mail" }) *@
         <input type="email" name="Email" value="@(string.IsNullOrEmpty(Model.Email = "E=posta Adresiniz ") ? "" : Model.Email)" id="Email" style="padding: 4px 10px;margin-left:-10px;width:50%;" />
 
     </center>
     <center class="mb-2 mt-2">
-        @*@Html.TextBox("PhoneNumber", Model.PhoneNumber, new { @style = "padding: 4px 10px;margin-left:-10px;width:50%;", @placeholder = "Telefon Numarası" })*@
         <input type="tel" name="PhoneNumber" value="@(string.IsNullOrEmpty(Model.PhoneNumber = "Telefon Numaranız") ? "" : Model.PhoneNumber)" id="PhoneNumber" style="padding: 4px 10px;margin-left:-10px;width:50%;" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" />
     </center>
     <center class="mt-2">
