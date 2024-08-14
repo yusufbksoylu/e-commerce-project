@@ -53,10 +53,12 @@
     </style>
 </head>
 <body>
+
     <div class="w3-sidebar w3-bar-block w3-card w3-animate-left bg-light" style="display:none" id="mySidebar">
-        <button class="w3-bar-item w3-button w3-large"
-                onclick="w3_close()">
+
+        <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">
                 <i class="fa fa-bars"></i>
+        
         </button>
         <a style="text-decoration:none;" href="/Product/ProductList" class="w3-bar-item w3-button">Ürünler</a>
         <a style="text-decoration:none;" href="/Category/CategoryList" class="w3-bar-item w3-button">Kategoriler</a>
@@ -66,15 +68,18 @@
         <a style="text-decoration:none;" href="/Comment/CommentList" class="w3-bar-item w3-button">Yorumlar</a>
         <a style="text-decoration:none;" href="/User/UserList" class="w3-bar-item w3-button">Kullanıcılar</a>
     </div>
+
     <div id="main">
 
         <div class="w3-teal bg-info">
+
             <div class="row">
                 <div class="col-6">
                     <button id="openNav" style="text-align:start" class="w3-button w3-teal w3-xlarge bg-info" onclick="w3_open()">&#9776;</button>
                 </div>
-                <div style="text-align:end;padding-right:30px;padding-top:10px;border-radius:10px;" class="col-6">
-                     <a class="text-white" style="text-decoration:none" href="/User/UserPage/">Anasayfa</a>
+
+                 <div style="text-align:end;padding-right:30px;padding-top:10px;border-radius:10px;" class="col-6">
+                    <a class="text-white" style="text-decoration:none" href="/Home/HomePage/">Anasayfa</a>
                     <div class="dropdown">
                         <a href="/User/UserPage/" class="dropbtn text-white" style="text-decoration:none;">
                             @await Html.PartialAsync("~/Views/User/GetUserName.cshtml")
